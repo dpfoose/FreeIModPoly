@@ -1,12 +1,12 @@
-function baseline=FreeIModPoly(spectrum, abscissa, poly_order, max_it, threshold)
+function [baseline, corrected, coefs]=FreeIModPoly(spectrum, abscissa, poly_order=5, max_it=100, threshold=0.95)
     if (poly_order < 1)
-        exit("poly_order must be an integer greater than 0")
+        exit("poly_order must be an integer greater than 0");
     endif
     if (threshold >= 1 || threshold <= 0)
-        exit("threshold must be a value between 0 and 1")
+        exit("threshold must be a value between 0 and 1");
     endif
     if(rows(spectrum) != rows(abscissa))
-        exit("spectrum and abscissa must have same size")
+        exit("spectrum and abscissa must have same size");
     endif
 
     i = 2;
@@ -45,48 +45,48 @@ function baseline=FreeIModPoly(spectrum, abscissa, poly_order, max_it, threshold
         i = i + 1;
     until (err < threshold || ((no_max_it == 0) && (i >= max_it)))
     baseline = CalcPoly(coefs, abscissa);
-endfunction
+    corrected = spectrum - baseline;
 
-
-
-function dev=CalcDev(specturm, fit)
-    R = spectrum - fit;
-    R_avg = mean(R);
-    centered = R - R_avg;
-    centered = centered .^ 2;
-    return sqrt(sum(diff)/rows(diff));
-endfunction
+    function dev=CalcDev(specturm, fit)
+        R = spectrum - fit;
+        R_avg = mean(R);
+        centered = R - R_avg;
+        centered = centered .^ 2;
+        dev = sqrt(sum(centered)/rows(centered));
+    endfunction
 
 
 
 
-function ind=NonPeakInd(spectrum, dev)
-    SUM = spectrum + dev;
-    ind = find(spectrum <= SUM);
-endfunction
+    function ind=NonPeakInd(spectrum, dev)
+        SUM = spectrum + dev;
+        ind = find(spectrum <= SUM);
+    endfunction
 
-function poly=CalcPoly(coefs, x)
-    poly = x*coefs(1) + x*coefs(2);
-    if (rows(coefs) > 1)
-        for i = 3:rows(coefs)
-            poly = poly + coefs(i) * x;
+    function poly=CalcPoly(coefs, x)
+        poly = coefs(1) + x*coefs(2);
+        if (rows(coefs) > 1)
+           for i = 3:rows(coefs)
+              poly = poly + coefs(i) * x .^ (i-1);
+           endfor
+        endif
+    endfunction
+
+    function fit=OrdinaryLeastSquares(X, y)
+        fit = inv(X' * X) * (X' * y);
+    endfunction
+
+    function X=DesignMatrix(x, poly_order)
+        X = zeros(rows(x), poly_order + 1);
+        X(:, 1) = ones(rows(X), 1);
+        X(:, 2) = x;
+        for i = 2:columns(X)
+            X(:, i) = x .^ (i-1);
         endfor
-    endif
-endfunction
+    endfunction
 
-function fit=OrdinaryLeastSquares(X, y)
-    fit = inv(X' * X) * (X' * y);
-endfunction
+    function err=CalcErr(dev, prev_dev)
+        err = abs( (dev - prev_dev) / dev);
+    endfunction
 
-function X=DesignMatrix(x, poly_order)
-    X = zeros(rows(x), poly_order + 1);
-    X(:, 1) = ones(rows(x));
-
-    for 2:cols(X)
-        X(:, i) = x .^ i
-    endfor
-endfunction
-
-function err=CalcErr(dev, prev_dev)
-    return abs( (dev - prev_dev) / dev);
 endfunction
