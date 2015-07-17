@@ -31,9 +31,13 @@ function baseline=FreeIModPoly(spectrum, abscissa, poly_order, max_it, threshold
         %Polynomial fitting%
         coefs = OrdinaryLeastSquares(X, prev_fit);
         fit = CalcPoly(coefs, new_abscissa);
+        %Calcualte residuals and dev%
         dev = CalcDev(prev_fit, fit);
+        %error criteria%
         err = CalcErr(dev, prev_dev);
+        %Reconstruction of model input
         fit = fit + dev;
+        %if a value in the previous fit is lower than this fit, take previous
         ind = find(prev_fit < fit);
         fit(ind) = prev_fit(ind);
         prev_fit = fit;
