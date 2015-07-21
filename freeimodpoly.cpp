@@ -60,31 +60,13 @@ uword FreeIModPoly::IModPoly(const vec &spectrum,
     mat X;
     vec coefs, fit;
     double dev;
+
     //perform first regresion (on spectrum without removed major peaks)
-    try{
-        X = Vandermonde(abscissa, poly_order);
-    }catch(exception e){
-        cout << "Vandermonde" << endl;
-        throw e;
-    }
-    try{
-        coefs = FreeIModPoly::OrdinaryLeastSquares(X, spectrum);
-    }catch(exception e){
-        cout << "OrdinaryLeastSquares" << endl;
-        throw e;
-    }
-    try{
-        fit = FreeIModPoly::CalcPoly(coefs, abscissa);
-    }catch(exception e){
-        cout << "CalcPoly" << endl;
-        throw e;
-    }
-    try{
-        dev = FreeIModPoly::CalcDev(spectrum, fit);
-    }catch(exception e){
-        cout << "CalcDev" << endl;
-        throw e;
-    }
+    X = Vandermonde(abscissa, poly_order);
+    coefs = FreeIModPoly::OrdinaryLeastSquares(X, spectrum);
+    fit = FreeIModPoly::CalcPoly(coefs, abscissa);
+    dev = FreeIModPoly::CalcDev(spectrum, fit);
+    cout << "CalcDev" << endl;
 
     double prev_dev = dev; //used in while loop critera
 
