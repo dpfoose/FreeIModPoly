@@ -13,7 +13,7 @@
 // General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Octave; see the file COPYING.  If not, see
+// along with Octave; see the file LICENSE.  If not, see
 // <http://www.gnu.org/licenses/>.
 //
 // FreeIModPoly: A free software implementation of the Vancouver Raman Algorithm
