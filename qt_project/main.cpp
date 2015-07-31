@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
         max_it = atof(argv[2]);
         threshold = atof(argv[3]);
         outtype = csv_ascii;
+        outtype_text = "csv";
         break;
       case 6:
         infilename = string(argv[4]);
@@ -74,6 +75,7 @@ int main(int argc, char* argv[])
         max_it = atof(argv[2]);
         threshold = atof(argv[3]);
         outtype = csv_ascii;
+        outtype_text = "csv";
         break;
       case 7:
         infilename = string(argv[4]);
@@ -99,7 +101,6 @@ int main(int argc, char* argv[])
         transpose = true;
         break;
     }
-
     using namespace arma;
     mat spec_file;
     spec_file.load(infilename);
@@ -131,14 +132,14 @@ int main(int argc, char* argv[])
         }catch(exception e){cerr << "exception thrown!" << endl; return 2;}
         out_mat.col(0) = abscissa;
         out_mat.col(1) = baseline;
-        out_mat.col(3) = corrected;
+        out_mat.col(2) = corrected;
         cout << "Final error: " << err << endl;
         if (iter >= max_it)
             cout << "Did not converge in " << iter << " iterations." << endl;
         else{
             cout << "Converged in " << iter << " iterations." << endl;
         }
-        bool ok = out_mat.save(outfilename, outtype);
+        bool ok = out_mat.save(outfilename + "." + outtype_text, outtype);
         if (ok){return 0;}
         else{cout << "Save failed!" << endl; return 3;}
     }
@@ -158,12 +159,12 @@ int main(int argc, char* argv[])
                                               poly_order, max_it, threshold);
             baselines.col(i+1) = baseline;
             corrected_spectra.col(i+1) = corrected;
-            error_report(i, 1) = err;
-            error_report(i, 2) = (double) (iter < max_it);
+            error_report(i, 0) = err;
+            error_report(i, 1) = (double) (iter < max_it);
         }
-        bool blok = baselines.save("bl_" + outfilename, outtype);
-        bool csok = corrected_spectra.save("cs_" + outfilename, outtype);
-        bool erok = error_report.save("er_" + outfilename, outtype);
+        bool blok = baselines.save(outfilename + "_bl." + outtype_text, outtype);
+        bool csok = corrected_spectra.save(outfilename + "_cs." + outtype_text, outtype);
+        bool erok = error_report.save(outfilename + "_er." + outtype_text, outtype);
         cout << (blok ? "Saved baseline\n" : "Saving baslines failed\n")
              << (csok ? "Saved corrected\n" : "Saving spectra failed\n")
              << (erok ? "Saved error report\n" : "Saving error report failed\n");

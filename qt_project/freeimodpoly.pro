@@ -8,31 +8,31 @@ SOURCES += main.cpp \
 HEADERS += \
     $$PWD/../freeimodpoly.h
 
-INCLUDEPATH += $$PWD/../../../Vespucci/MinGW_libs/include
-DEPENDPATH += $$PWD/../../../Vespucci/MinGW_libs/include
+INCLUDEPATH += $$PWD/../
+DEPENDPATH += $$PWD/../
 
-INCLUDEPATH += $$PWD/../FreeIModPoly
-DEPENDPATH += $$PWD/../FreeIModPoly
+INCLUDEPATH += $$PWD/../../../../../usr/include
+DEPENDPATH += $$PWD/../../../../../usr/include
+
+
 
 #Armadillo
-win32: LIBS += -L$$PWD/../../../Vespucci/MinGW_libs/lib/ -larmadillo
-win32-g++: PRE_TARGETDEPS += $$PWD/../../../Vespucci/MinGW_libs/lib/libarmadillo.a
+win32: LIBS += -L$$PWD/../../../../../usr/lib/ -larmadillo
+win32-g++: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libarmadillo.a
 
 #HDF5
-win32: LIBS += -L$$PWD/../../../Vespucci/MinGW_libs/lib/ -lhdf5
-wind32-g++: PRE_TARGETDEPS += $$PWD/../../../Vespucci/MinGW_libs/lib/libhdf5.a
+win32: LIBS += -L$$PWD/../../../../../usr/lib/ -lhdf5
+wind32-g++: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libhdf5.a
 
 #ARPACK-NG
-win32: LIBS += -L$$PWD/../../../Vespucci/MinGW_libs/lib/ -larpack
-win32-g++: PRE_TARGETDEPS += $$PWD/../../../Vespucci/MinGW_libs/lib/libarpack.a
+win32: LIBS += -L$$PWD/../../../../../usr/lib/ -larpack
+win32-g++: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libarpack.a
 
 #OpenBLAS (linked dynamically because arpack links it dynamically)
-win32: LIBS += -L$$PWD/../../../Vespucci/MinGW_libs/lib/ -llibopenblas
-win32-g++: PRE_TARGETDEPS += $$PWD/../../../Vespucci/MinGW_libs/lib/libopenblas.dll.a
+win32: LIBS += -L$$PWD/../../../../../usr/lib/ -llibopenblas
+win32-g++: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libopenblas.dll.a
 
 #Libgfortran
-win32: LIBS += -L$$PWD/../MinGW_libs/lib/$$PWD/../../../Vespucci/MinGW_libs/lib/ -lgfortran
-win32-g++: PRE_TARGETDEPS += $$PWD/../../../Vespucci/MinGW_libs/lib/libgfortran.a
-
-
+win32: LIBS += -L$$PWD/../../../../../usr/lib/ -lgfortran
+win32-g++: PRE_TARGETDEPS += $$PWD/../../../../../usr/lib/libgfortran.a
 

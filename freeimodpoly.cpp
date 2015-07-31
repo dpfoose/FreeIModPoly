@@ -74,7 +74,7 @@ uword FreeIModPoly::IModPoly(const vec &spectrum,
     uvec non_peak_ind = NonPeakInd(spectrum, dev);
     vec new_abscissa = abscissa(non_peak_ind);
 
-    vec prev_fit = spectrum(non_peak_ind);; //not a fit here, but in the loop.
+    vec prev_fit = spectrum(non_peak_ind);//not a fit here, but in the loop.
 
     X = Vandermonde(new_abscissa, poly_order);
 
