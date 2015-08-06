@@ -1,7 +1,11 @@
 ## Copyright (C) 2015 Wright State University
 ## Author: Daniel P. Foose
 ## This file is part of FreeIModPoly.
-##
+
+## FreeIModPoly is distributed under two licenses, the GNU General Public License
+## v3 and the MIT License. Which license you use is left to your discretion
+
+## GPL Statement:
 ## FreeIModPoly is free software; you can redistribute it and/or modify it
 ## under the terms of the GNU General Public License as published by
 ## the Free Software Foundation; either version 3 of the License, or (at
@@ -15,11 +19,21 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Octave; see the file COPYING.  If not, see
 ## <http://www.gnu.org/licenses/>.
-##
+
+## MIT License Statement:
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+## FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+## AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+## LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+## THE SOFTWARE.
+
 ## FreeIModPoly: A free software implementation of the Vancouver Raman Algorithm
 ## Please cite DOI: 10.1366/000370207782597003 and this project (see CITATION)
 ## The author of this implementation is not associated with the authors of the
 ## algorithm.
+
 
 "FreeIModPoly" <-
 function (spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05) {
