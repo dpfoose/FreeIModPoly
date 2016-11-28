@@ -56,13 +56,13 @@
 function [baseline, corrected, coefs, i, err]=...
 FreeIModPoly(spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05)
     if (polyOrder < 1)
-        exit("polyOrder must be an integer greater than 0");
+        exit('polyOrder must be an integer greater than 0');
     endif
     if (threshold >= 1 || threshold <= 0)
-        exit("threshold must be a value between 0 and 1");
+        exit('threshold must be a value between 0 and 1');
     endif
     if(rows(spectrum) != rows(abscissa))
-        exit("spectrum and abscissa must have same size");
+        exit('spectrum and abscissa must have same size');
     endif
 
     i = 2;
@@ -113,9 +113,10 @@ FreeIModPoly(spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05)
     endfunction
 
     function poly=CalcPoly(coefs, x)
+        [m, n] = 
         poly = coefs(1) + x*coefs(2);
-        if (rows(coefs) > 2)
-           for i = 3:rows(coefs)
+        if (size(coefs, 1) > 2)
+           for i = 3:size(coefs, 1)
               poly = poly + coefs(i) * x .^ (i-1);
            endfor
         endif
