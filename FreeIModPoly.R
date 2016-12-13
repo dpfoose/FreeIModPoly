@@ -34,6 +34,7 @@
 ## The author of this implementation is not associated with the authors of the
 ## algorithm.
 
+# abscissa and spectrum should be lists
 
 "FreeIModPoly" <-
 function (spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05) {
@@ -46,7 +47,7 @@ function (spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05) {
     warning("threshold must be between 0 and 1")
     quit()
   }
-  if (nrow(spectrum) != nrow(abscissa)){
+  if (length(spectrum) != length(abscissa)){
     warning("spectrum and abscissa must be of same size")
     quit()
   }
@@ -58,8 +59,8 @@ function (spectrum, abscissa, polyOrder=5, maxIt=100, threshold=0.05) {
   dev <- CalcDev(model$residuals)
   prevDev <- dev;
   nonPeakInd <- NonPeakInd(spectrum, dev)
-  newAbscissa <- abscissa[nonPeakInd,]
-  prevFit <- spectrum[nonPeakInd,]
+  newAbscissa <- abscissa[nonPeakInd]
+  prevFit <- spectrum[nonPeakInd]
   err <- threshold
 
   repeat{
