@@ -82,7 +82,7 @@ FreeIModPoly(spectrum, abscissa, polyOrder, maxIt, threshold)
     i = 2;
     noMaxIt = (maxIt == 0);
     coefs = polyfit(abscissa, spectrum, polyOrder);
-    fit = CalcPoly(coefs, abscissa);
+    fit = polyval(coefs, abscissa);
     dev = CalcDev(spectrum, fit);
     prevDev = dev;
 
@@ -96,7 +96,7 @@ FreeIModPoly(spectrum, abscissa, polyOrder, maxIt, threshold)
     while (complete == 0)
         %Polynomial fitting%
         coefs = polyfit(newAbscissa, prevFit, polyOrder);
-        fit = CalcPoly(coefs, newAbscissa);
+        fit = polyval(coefs, newAbscissa);
         %Calcualte residuals and dev%
         dev = CalcDev(prevFit, fit);
         %error criterion%
@@ -111,7 +111,7 @@ FreeIModPoly(spectrum, abscissa, polyOrder, maxIt, threshold)
         i = i + 1;
         complete = (err < threshold || ((noMaxIt ~= 0) && (i >= maxIt)));
     end
-    baseline = CalcPoly(coefs, abscissa);
+    baseline = polyval(coefs, abscissa);
     corrected = spectrum - baseline;
 end
     
@@ -127,16 +127,7 @@ end
       SUM = spectrum + dev;
       ind = find(spectrum <= SUM);
   end
-
-  function poly=CalcPoly(coefs, x)
-      poly = coefs(1) + x*coefs(2);
-      if (size(coefs, 1) > 2)
-           for i = 3:size(coefs, 1)
-              poly = poly + coefs(i) * x .^ (i-1);
-           end
-      end
-  end
-
-    function err=CalcErr(dev, prevDev)
+  
+  function err=CalcErr(dev, prevDev)
         err = abs( (dev - prevDev) / dev);
-    end
+  end
