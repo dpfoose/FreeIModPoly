@@ -79,7 +79,7 @@ FreeIModPoly(spectrum, abscissa, polyOrder, maxIt, threshold)
         exit('spectrum and abscissa must have same size');
     end
 
-    i = 2;
+    i = 0;
     noMaxIt = (maxIt == 0);
     coefs = polyfit(abscissa, spectrum, polyOrder);
     fit = polyval(coefs, abscissa);
