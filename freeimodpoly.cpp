@@ -83,7 +83,7 @@ uword FreeIModPoly::IModPoly(const vec &spectrum,
     double prev_dev = dev; //used in while loop critera
 
     //find major peak areas to remove and remove them
-    uvec non_peak_ind = NonPeakInd(spectrum, dev);
+    uvec non_peak_ind = NonPeakInd(spectrum, fit , dev);
     vec new_abscissa = abscissa(non_peak_ind);
 
     vec prev_fit = spectrum(non_peak_ind);//not a fit here, but in the loop.
@@ -136,12 +136,13 @@ double FreeIModPoly::CalcDev(const vec &spectrum, const vec &fit)
 /// \param dev
 /// \return
 ///
-uvec FreeIModPoly::NonPeakInd(const vec &spectrum, const double dev)
+uvec FreeIModPoly::NonPeakInd(const vec &spectrum, const vec &fit, const double dev)
 {
     using namespace arma;
-    vec SUM = spectrum + dev * ones(spectrum.n_rows);
+    vec SUM = fit + dev * ones(fit.n_rows);
     return find(spectrum <= SUM);
 }
+
 
 ///
 /// \brief FreeIModPoly::CalcPoly Calculate the values of a polynomial
