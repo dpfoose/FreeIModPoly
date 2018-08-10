@@ -51,7 +51,7 @@ namespace FreeIModPoly{
                    const double threshold);
 
     double CalcDev(const vec &spectrum, const vec &fit);
-    uvec NonPeakInd(const vec &spectrum, const double dev);
+    uvec NonPeakInd(const vec &spectrum, const vec &fit, const double dev);
     vec CalcPoly(const vec &coefs, const vec &x);
     vec OrdinaryLeastSquares(const mat &X, const vec &y);
     mat Vandermonde(const vec &x, const int poly_order);
